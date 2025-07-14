@@ -21,6 +21,7 @@ copy src/main/resources/application.properties.template src/main/resources/appli
 ### 2. 데이터베이스 설정
 
 프로젝트는 404DB 데이터베이스를 사용합니다. 데이터베이스 설정은 src/main/resources/config/database.properties 파일에서 확인할 수 있습니다.
+DB username과 password도 재설정 해주세요.
 
 ### 3. 프로젝트 실행
 
