@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<!-- @Controller -->
+	<context:component-scan base-package="com.spring.project.controller" />
+	<mvc:annotation-driven />
+	
+	<!-- 정적 리소스 처리: Spring이 처리하지 못하는 요청을 기본 서블릿으로 위임 -->
+	<mvc:default-servlet-handler />
+	
+	<!-- 명시적 정적 리소스 매핑 (추가 보안) -->
+	<mvc:resources mapping="/*.css" location="/" />
+	<mvc:resources mapping="/*.js" location="/" />
+	<mvc:resources mapping="/*.ico" location="/" />
+	<mvc:resources mapping="/css/**" location="/css/" />
+    <mvc:resources mapping="/js/**" location="/js/" />
+    <mvc:resources mapping="/images/**" location="/images/" />
+	
+	
+	
+	<!-- ViewResolver -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	
+	
+	 
+	 
+
+</beans>

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="userRepository">
+
+   <resultMap id="ProblemSubMissionMap" type="problemSub">
+    <result property="submission_id" column="submission_id"/>
+    <result property="user_id" column="user_id"/>
+    <result property="problem_id" column="problem_id"/>
+    <result property="submitted_code" column="submitted_code"/>
+    <result property="is_correct" column="is_correct"/>
+    <result property="attempt_count" column="attempt_count"/>
+    <result property="submitted_at" column="submitted_at"/>
+    <result property="earned_experience" column="earned_experience"/>
+    
+    <result property="total_submissions" column="total_submissions"/>
+    <result property="correct_submissions" column="correct_submissions"/>
+    <result property="correct_rate" column="correct_rate"/>
+</resultMap>
+
+   
+   <!-- 구글 로그인 - 이메일로 사용자 찾기 -->
+   <select id="findByUsername" resultType="user">
+	    SELECT * FROM USERS WHERE email = #{username}
+   </select>
+   
+   <!-- 이메일로 사용자 검색 (OAuth2용) -->
+   <select id="findByEmail" resultType="user">
+	    SELECT * FROM USERS WHERE email = #{email}
+   </select>
+   
+   <!-- 구글 로그인 - 사용자 등록 -->
+   <insert id="insertUser">
+	    INSERT INTO USERS (username, password, nickname, user_type, experience_points, email)
+	    VALUES (#{username}, #{password}, #{nickname}, #{user_type}, #{experience_points}, #{email})
+   </insert>
+   
+        <!-- user_id값에 해당하는 제출 테이블의 정답여부 리스트 추출 -->
+   <select id ="getProblemSubMissionIsCorrect" resultType="problemSub">
+      <![CDATA[select is_correct, problem_id from PROBLEM_SUBMISSIONS where user_id = #{user_id}]]>
+   </select>
+   
+         <!-- problem_id값에 해당 문제 제목 추출 -->
+   <select id ="getProblemTitle" resultType="problem">
+      <![CDATA[select * from PROBLEMS where problem_id = #{problem_id}]]>
+   </select>
+   
+   <select id="getProblemCategory" resultType="category">
+      <![CDATA[SELECT  c.category_name FROM PROBLEMS p JOIN CATEGORIES c ON p.category_id = c.category_id WHERE p.problem_id = #{problem_id}]]>
+   </select>
+   
+   <select id="getProblemDifficulty" resultType="difficulty">
+      <![CDATA[SELECT  d.difficulty_name FROM PROBLEMS p JOIN DIFFICULTY_LEVELS d ON p.category_id = d.difficulty_id WHERE p.problem_id = #{problem_id}]]>
+   </select>
+   
+   <select id="getPostTitle" resultType="post">
+      <![CDATA[select * from POSTS where user_id = #{user_id}]]>
+   </select>
+   
+   <select id="getPostCategory" resultType="postCategory">
+      <![CDATA[SELECT  c.category_name FROM POSTS p JOIN POST_CATEGORY c ON p.category_id = c.category_id WHERE p.post_id = #{post_id}]]>
+   </select>
+   
+   <select id="getUserName" resultType="user">
+      <![CDATA[SELECT * FROM USERS WHERE user_id = #{user_id}]]>
+   </select>
+   
+   <select id="getUserGrade" resultType="userGrade">
+      <![CDATA[SELECT ug.* FROM USERS u JOIN USER_GRADES ug ON u.grade_id = ug.grade_id WHERE u.user_id = #{user_id}]]>
+   </select>
+   
+   <select id="getUserSub" resultMap="ProblemSubMissionMap">
+      <![CDATA[
+SELECT 
+    u.user_id,
+    u.username,
+    COUNT(ps.submission_id) AS total_submissions,
+    SUM(CASE WHEN ps.is_correct = TRUE THEN 1 ELSE 0 END) AS correct_submissions,
+    ROUND(
+        IF(COUNT(ps.submission_id) = 0, 0,
+           SUM(CASE WHEN ps.is_correct = TRUE THEN 1 ELSE 0 END) / COUNT(ps.submission_id) * 100
+), 2
+    ) AS correct_rate
+FROM USERS u
+LEFT JOIN PROBLEM_SUBMISSIONS ps ON u.user_id = ps.user_id
+WHERE u.user_id = #{user_id} GROUP BY u.user_id, u.username;
+      ]]>
+   </select>
+   
+   <update id="updateNickname" parameterType="user">
+      <![CDATA[UPDATE USERS SET nickname = #{nickname} WHERE user_id = #{user_id}]]>
+   </update>
+   
+   <update id="updatePassword" parameterType="user">
+      <![CDATA[UPDATE USERS SET password = #{password} WHERE user_id = #{user_id}]]>
+   </update>
+   
+   <insert id="insertUser1" parameterType="user">
+      <![CDATA[
+      INSERT INTO USERS (user_id, username, password, nickname, user_type, grade_id, experience_points, created_at, updated_at)
+      VALUES (#{user_id}, #{username}, #{password}, #{nickname}, #{user_type}, #{grade_id}, #{experience_points}, NOW(), NOW())
+      ]]>
+   </insert>
+   
+   <select id="getAllUserInfo" resultType="user">
+      <![CDATA[select * from USERS]]>
+   </select>
+   
+   <select id="getAllUserGrade" resultType="userGrade">
+      <![CDATA[select * from USER_GRADES where grade_id = #{grade_ids}]]>
+   </select>
+   
+   <select id="getUserProblemSub" resultType="problemSub">
+      <![CDATA[SELECT 
+    COUNT(*) AS total_submissions,
+    SUM(CASE WHEN is_correct = TRUE THEN 1 ELSE 0 END) AS correct_submissions,
+    ROUND(
+        IF(COUNT(*) = 0, 0,
+           SUM(CASE WHEN is_correct = TRUE THEN 1 ELSE 0 END) / COUNT(*) * 100
+        ), 2
+    ) AS correct_rate
+FROM PROBLEM_SUBMISSIONS
+WHERE user_id = #{user_id}]]>
+   </select>
+   
+   <select id="getAllUserPost" resultType="post">
+      <![CDATA[select * from POSTS]]>
+   </select>
+   
+   <select id="getAllUserPostCategory" resultType="postCategory">
+      <![CDATA[select * from POST_CATEGORY where category_id = #{category_id}]]>
+   </select>
+   
+   <select id="getAllProblem" resultType="problem">
+		<![CDATA[select * from PROBLEMS]]>
+	</select>	
+	
+	<select id="getAllProblemCategory" resultType="category">
+		<![CDATA[select * from CATEGORIES where category_id = #{category_id}]]>
+	</select>	
+	
+	<select id="getAllProblemLevel" resultType="difficulty">
+		<![CDATA[select * from DIFFICULTY_LEVELS where difficulty_id = #{difficulty_id}]]>
+	</select>	
+	
+	<select id="getAllExamInfo" resultType="exam">
+		<![CDATA[select * from EXAMS]]>
+	</select>
+	
+	
+	<select id="getexamSubmissionInfo" resultType="map">
+		SELECT
+			(SELECT COUNT(*) FROM EXAMS) AS total_exam_count,
+			COUNT(es.exam_submission_id) AS total_submission_count,
+			ROUND(
+				IF(COUNT(es.exam_submission_id) = 0, 0,
+				   (SUM(CASE WHEN es.is_passed = TRUE THEN 1 ELSE 0 END) / COUNT(es.exam_submission_id)) * 100
+				), 2
+			) AS average_pass_rate
+		FROM
+			EXAM_SUBMISSIONS es
+	</select>
+	
+	<!-- 전체 게시글, 전체 사용자 -->
+	<select id="getTotalCounts" resultType="map">
+    SELECT
+        (SELECT COUNT(*) FROM USERS) AS user_count,
+        (SELECT COUNT(*) FROM POSTS) AS post_count
+	</select>
+
+	
+	<delete id="deletePost" parameterType="java.lang.Long">
+		<![CDATA[DELETE FROM POSTS WHERE post_id = #{post_id}]]>
+	</delete>
+	
+	<delete id="deleteProblem" parameterType="java.lang.Long">
+		<![CDATA[DELETE FROM PROBLEMS WHERE problem_id = #{problem_id}]]>
+	</delete>
+	
+	  <!-- 로그인 -->
+   <select id="getLogin" resultType="user">
+        SELECT * FROM USERS
+        WHERE username = #{username}
+          AND password = #{password}
+    </select>
+    
+    <insert id="register">
+	    INSERT INTO USERS (username, password, nickname, email)
+	    VALUES (#{username}, #{password}, #{nickname}, #{email})
+	</insert>
+   
+   
+   
+</mapper>

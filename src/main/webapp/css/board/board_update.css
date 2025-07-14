@@ -1,0 +1,165 @@
+/* board_insert.css와 동일한 기본 스타일을 상속하고 수정 관련 스타일을 추가 */
+@import url('./board_insert.css');
+*{
+	user-select: none;
+}
+/* 수정 안내 박스 (가이드라인 대신) */
+.edit-notice {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 2rem;
+    height: fit-content;
+    position: sticky;
+    top: 100px;
+}
+
+.edit-notice h3 {
+    color: #64ffda;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.notice-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.notice-item h4 {
+    color: #e0e6ed;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.notice-item p {
+    color: #b0b0b0;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+/* 수정 관련 특별 스타일 */
+.form-title {
+    color: #ffc107 !important;
+}
+
+.form-title::before {
+    content: '⚠️ ';
+    font-size: 0.8em;
+}
+
+/* 수정된 필드 표시 */
+.form-group.modified .form-label::after {
+    content: ' (수정됨)';
+    color: #ffc107;
+    font-size: 0.8rem;
+    font-weight: normal;
+}
+
+.form-input.modified, .form-textarea.modified, .form-select.modified {
+    border-color: #ffc107;
+    box-shadow: 0 0 10px rgba(255, 193, 7, 0.2);
+}
+
+/* 수정 사유 필드 특별 스타일 */
+#editReason {
+    background: rgba(255, 193, 7, 0.05);
+    border-color: rgba(255, 193, 7, 0.3);
+}
+
+#editReason:focus {
+    border-color: #ffc107;
+    box-shadow: 0 0 10px rgba(255, 193, 7, 0.3);
+}
+
+/* 되돌리기 버튼 특별 스타일 */
+.btn-secondary[onclick="resetForm()"] {
+    background: rgba(255, 193, 7, 0.1);
+    border-color: #ffc107;
+    color: #ffc107;
+}
+
+.btn-secondary[onclick="resetForm()"]:hover {
+    background: rgba(255, 193, 7, 0.2);
+    transform: translateY(-2px);
+}
+
+/* 수정 완료 버튼 */
+.btn-primary[type="submit"] {
+    background: linear-gradient(45deg, #ffc107, #ff9800);
+}
+
+/* 변경사항 하이라이트 */
+.change-highlight {
+    background: rgba(255, 193, 7, 0.1);
+    border-left: 4px solid #ffc107;
+    padding-left: 1rem;
+    margin: 0.5rem 0;
+    border-radius: 0 5px 5px 0;
+}
+
+/* 원본 내용 표시 */
+.original-content {
+    background: rgba(156, 39, 176, 0.1);
+    border: 2px solid rgba(156, 39, 176, 0.3);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    color: #b39ddb;
+}
+
+.original-content::before {
+    content: '📋 원본 내용: ';
+    font-weight: 600;
+    color: #9c27b0;
+}
+
+/* 반응형 디자인 오버라이드 */
+@media (max-width: 768px) {
+    .nav-container {
+        padding: 1rem;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .breadcrumb {
+        order: -1;
+    }
+
+    .main-container {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+        gap: 2rem;
+    }
+
+    .form-container {
+        order: 1;
+    }
+
+    .edit-notice {
+        order: 2;
+        position: static;
+    }
+
+    .form-title {
+        font-size: 1.5rem;
+    }
+
+    .editor-toolbar {
+        gap: 0.25rem;
+    }
+
+    .toolbar-btn {
+        padding: 0.4rem;
+        min-width: 30px;
+        font-size: 0.8rem;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .action-buttons .btn {
+        width: 100%;
+    }
+}

@@ -1,0 +1,509 @@
+/* 기본 스타일 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+    color: #e0e0e0;
+    min-height: 100vh;
+}
+
+/* 헤더 */
+.header {
+    background: rgba(26, 26, 46, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(100, 255, 218, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    height: 70px;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #64ffda;
+    text-decoration: none;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+.nav-menu a {
+    color: #e0e0e0;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.nav-menu a:hover {
+    color: #64ffda;
+}
+
+.user-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-nickname {
+    color: #64ffda;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 8px 12px;
+    border-radius: 5px;
+}
+
+.user-nickname:hover {
+    background: rgba(100, 255, 218, 0.1);
+    transform: translateY(-1px);
+}
+
+.logout-btn {
+    background: rgba(255, 107, 107, 0.8);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.logout-btn:hover {
+    background: rgba(255, 107, 107, 1);
+    transform: translateY(-2px);
+}
+
+/* 메인 컨테이너 */
+.main-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    display: grid;
+    gap: 30px;
+    grid-template-columns: 1fr;
+}
+
+/* 프로필 섹션 */
+.profile-section {
+    background: rgba(30, 30, 50, 0.9);
+    border-radius: 20px;
+    padding: 40px;
+    border: 1px solid rgba(100, 255, 218, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.profile-avatar {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #64ffda, #4fc3f7);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    font-weight: bold;
+    color: #1a1a2e;
+}
+
+.profile-details {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.profile-name {
+    font-size: 28px;
+    font-weight: bold;
+    color: #64ffda;
+}
+
+.profile-id {
+    font-size: 16px;
+    color: #b0b0b0;
+}
+
+.edit-profile-btn {
+    background: rgba(100, 255, 218, 0.1);
+    color: #64ffda;
+    border: 1px solid rgba(100, 255, 218, 0.3);
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.edit-profile-btn:hover {
+    background: rgba(100, 255, 218, 0.2);
+    transform: translateY(-2px);
+}
+
+/* 편집 폼 */
+.edit-form {
+    margin-top: 20px;
+    padding: 20px;
+    background: rgba(26, 26, 46, 0.8);
+    border-radius: 15px;
+    border: 1px solid rgba(100, 255, 218, 0.1);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #64ffda;
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    background: rgba(30, 30, 50, 0.8);
+    border: 1px solid rgba(100, 255, 218, 0.3);
+    border-radius: 8px;
+    color: #e0e0e0;
+    font-size: 14px;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #64ffda;
+    box-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.save-btn, .cancel-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.save-btn {
+    background: #64ffda;
+    color: #1a1a2e;
+}
+
+.save-btn:hover {
+    background: #4fc3f7;
+    transform: translateY(-2px);
+}
+
+.cancel-btn {
+    background: rgba(255, 107, 107, 0.8);
+    color: white;
+}
+
+.cancel-btn:hover {
+    background: rgba(255, 107, 107, 1);
+    transform: translateY(-2px);
+}
+
+/* 섹션 제목 */
+.section-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #64ffda;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* 통계 섹션 */
+.stats-section {
+    background: rgba(30, 30, 50, 0.9);
+    border-radius: 20px;
+    padding: 40px;
+    border: 1px solid rgba(100, 255, 218, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.stat-card {
+    background: rgba(26, 26, 46, 0.8);
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    border: 1px solid rgba(100, 255, 218, 0.1);
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(100, 255, 218, 0.2);
+}
+
+.stat-number {
+    font-size: 36px;
+    font-weight: bold;
+    color: #64ffda;
+    margin-bottom: 10px;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: #b0b0b0;
+}
+
+/* 활동 섹션 */
+.activity-section {
+    background: rgba(30, 30, 50, 0.9);
+    border-radius: 20px;
+    padding: 40px;
+    border: 1px solid rgba(100, 255, 218, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.activity-container {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.activity-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.activity-item {
+    background: rgba(26, 26, 46, 0.8);
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid rgba(100, 255, 218, 0.1);
+    transition: all 0.3s ease;
+}
+
+.activity-item:hover {
+    transform: translateX(5px);
+    border-color: rgba(100, 255, 218, 0.3);
+}
+
+.activity-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: #e0e0e0;
+    margin-bottom: 8px;
+}
+
+.activity-meta {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.difficulty-badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.difficulty-입문 {
+    background: rgba(144, 238, 144, 0.2);
+    color: #90EE90;
+}
+
+.difficulty-기초 {
+    background: rgba(135, 206, 235, 0.2);
+    color: #87CEEB;
+}
+
+.difficulty-중급 {
+    background: rgba(255, 165, 0, 0.2);
+    color: #FFA500;
+}
+
+.difficulty-고급 {
+    background: rgba(255, 99, 71, 0.2);
+    color: #FF6347;
+}
+
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.status-solved {
+    background: rgba(76, 175, 80, 0.2);
+    color: #4CAF50;
+}
+
+.status-attempted {
+    background: rgba(255, 193, 7, 0.2);
+    color: #FFC107;
+}
+
+.activity-date {
+    color: #888;
+    font-size: 12px;
+}
+
+.no-activity {
+    text-align: center;
+    color: #888;
+    padding: 40px;
+    font-style: italic;
+}
+
+/* 진행률 섹션 */
+.progress-section {
+    background: rgba(30, 30, 50, 0.9);
+    border-radius: 20px;
+    padding: 40px;
+    border: 1px solid rgba(100, 255, 218, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.progress-container {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.progress-item {
+    background: rgba(26, 26, 46, 0.8);
+    padding: 25px;
+    border-radius: 15px;
+    border: 1px solid rgba(100, 255, 218, 0.1);
+}
+
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.progress-label {
+    font-size: 16px;
+    color: #e0e0e0;
+    font-weight: 500;
+}
+
+.progress-percent {
+    font-size: 18px;
+    font-weight: bold;
+    color: #64ffda;
+}
+
+.progress-bar {
+    height: 10px;
+    background: rgba(100, 255, 218, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #64ffda, #4fc3f7);
+    border-radius: 5px;
+    transition: width 0.5s ease;
+    width: 0%;
+}
+
+.progress-fill.accuracy {
+    background: linear-gradient(90deg, #4CAF50, #8BC34A);
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .nav-menu {
+        display: none;
+    }
+
+    .profile-header {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .activity-meta {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .progress-info {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .main-container {
+        padding: 20px 10px;
+    }
+
+    .profile-section,
+    .stats-section,
+    .activity-section,
+    .progress-section {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-info {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+} 

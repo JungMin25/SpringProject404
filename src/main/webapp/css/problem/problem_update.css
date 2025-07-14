@@ -1,0 +1,551 @@
+/* 전체 스타일 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    min-height: 100vh;
+    color: #e0e0e0;
+}
+
+/* 헤더 */
+.header {
+    background: rgba(26, 26, 46, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(100, 255, 218, 0.3);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    height: 70px;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+    height: 100%;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #64ffda;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.logo:hover {
+    color: #4fd3b8;
+}
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #b0b0b0;
+    font-size: 0.9rem;
+}
+
+.breadcrumb a {
+    color: #64ffda;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.breadcrumb a:hover {
+    color: #4fd3b8;
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.admin-badge {
+    background: linear-gradient(135deg, #64ffda, #4fd3b8);
+    color: #1a1a2e;
+    padding: 0.3rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+/* 버튼 스타일 */
+.btn {
+    padding: 0.5rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #64ffda, #4fd3b8);
+    color: #1a1a2e;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(100, 255, 218, 0.4);
+}
+
+.btn-outline {
+    background: transparent;
+    color: #64ffda;
+    border: 2px solid #64ffda;
+}
+
+.btn-outline:hover {
+    background: #64ffda;
+    color: #1a1a2e;
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #6c757d, #5a6268);
+    color: white;
+}
+
+.btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4);
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+}
+
+.btn-danger:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+}
+
+.btn-sm {
+    padding: 0.3rem 0.8rem;
+    font-size: 0.8rem;
+}
+
+/* 메인 컨테이너 */
+.main-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    padding-top: 100px;
+}
+
+/* 페이지 헤더 */
+.page-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.page-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #64ffda;
+    margin-bottom: 1rem;
+}
+
+.page-subtitle {
+    font-size: 1.2rem;
+    color: #b0b0b0;
+    max-width: 600px;
+    margin: 0 auto 1rem;
+}
+
+/* 문제 정보 */
+.problem-info {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 1rem;
+    padding: 1rem;
+    background: rgba(26, 26, 46, 0.5);
+    border-radius: 8px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.problem-id,
+.created-date {
+    color: #b0b0b0;
+    font-size: 0.9rem;
+}
+
+.problem-id strong,
+.created-date strong {
+    color: #64ffda;
+}
+
+/* 폼 컨테이너 */
+.form-container {
+    background: rgba(26, 26, 46, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(100, 255, 218, 0.3);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.form-section {
+    margin-bottom: 3rem;
+}
+
+.form-section:last-of-type {
+    margin-bottom: 2rem;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #e0e0e0;
+    margin-bottom: 2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid rgba(100, 255, 218, 0.3);
+}
+
+/* 폼 그리드 */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #e0e0e0;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.required {
+    color: #e74c3c;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+    padding: 0.8rem;
+    background: rgba(26, 26, 46, 0.8);
+    border: 2px solid rgba(100, 255, 218, 0.3);
+    border-radius: 8px;
+    color: #e0e0e0;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+    outline: none;
+    border-color: #64ffda;
+    box-shadow: 0 0 0 3px rgba(100, 255, 218, 0.1);
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.form-textarea.large {
+    min-height: 200px;
+}
+
+.form-textarea.code-area {
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    background: rgba(15, 15, 25, 0.9);
+}
+
+.form-help {
+    font-size: 0.8rem;
+    color: #b0b0b0;
+    margin-top: 0.3rem;
+    font-style: italic;
+}
+
+/* 예시 컨테이너 */
+.example-container,
+.testcase-container {
+    background: rgba(26, 26, 46, 0.5);
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+.example-item,
+.testcase-item {
+    background: rgba(26, 26, 46, 0.8);
+    border: 1px solid rgba(100, 255, 218, 0.2);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.example-item h4,
+.testcase-item h4 {
+    color: #64ffda;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.example-grid,
+.testcase-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.remove-example,
+.remove-testcase {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
+
+/* 메타 정보 섹션 */
+.meta-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.meta-card {
+    background: rgba(26, 26, 46, 0.8);
+    border: 1px solid rgba(100, 255, 218, 0.2);
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+.meta-card h4 {
+    color: #64ffda;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    border-bottom: 1px solid rgba(100, 255, 218, 0.2);
+    padding-bottom: 0.5rem;
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(100, 255, 218, 0.1);
+}
+
+.stat-item:last-child {
+    border-bottom: none;
+}
+
+.stat-label {
+    color: #b0b0b0;
+    font-size: 0.9rem;
+}
+
+.stat-value {
+    color: #64ffda;
+    font-weight: 600;
+}
+
+/* 태그 컨테이너 */
+.tag-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.tag {
+    background: rgba(100, 255, 218, 0.2);
+    color: #64ffda;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.tag-remove {
+    background: none;
+    border: none;
+    color: #64ffda;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0;
+    margin-left: 0.3rem;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.tag-remove:hover {
+    background: rgba(231, 76, 60, 0.3);
+    color: #e74c3c;
+}
+
+/* 폼 액션 버튼 */
+.form-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(100, 255, 218, 0.2);
+}
+
+.form-actions .btn {
+    min-width: 120px;
+    font-size: 1rem;
+}
+
+/* 스크롤바 스타일 */
+.form-textarea::-webkit-scrollbar {
+    width: 8px;
+}
+
+.form-textarea::-webkit-scrollbar-track {
+    background: rgba(26, 26, 46, 0.5);
+    border-radius: 4px;
+}
+
+.form-textarea::-webkit-scrollbar-thumb {
+    background: rgba(100, 255, 218, 0.5);
+    border-radius: 4px;
+}
+
+.form-textarea::-webkit-scrollbar-thumb:hover {
+    background: rgba(100, 255, 218, 0.7);
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .nav-container {
+        padding: 0 1rem;
+        flex-direction: column;
+        gap: 1rem;
+        height: auto;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+
+    .header {
+        height: auto;
+    }
+
+    .main-container {
+        padding: 1rem;
+        padding-top: 140px;
+    }
+
+    .page-title {
+        font-size: 2rem;
+    }
+
+    .problem-info {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .meta-info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .example-grid,
+    .testcase-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .remove-example,
+    .remove-testcase {
+        position: static;
+        margin-top: 1rem;
+        width: 100%;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .form-actions .btn {
+        width: 100%;
+    }
+
+    .tag-container {
+        justify-content: center;
+    }
+}
+
+/* 폼 요소 애니메이션 */
+.form-input,
+.form-select,
+.form-textarea {
+    transition: all 0.3s ease;
+}
+
+.form-input:hover,
+.form-select:hover,
+.form-textarea:hover {
+    border-color: rgba(100, 255, 218, 0.5);
+}
+
+/* 추가/삭제 버튼 스타일 */
+.example-container > .btn-outline,
+.testcase-container > .btn-outline {
+    margin-top: 1rem;
+    width: 100%;
+    max-width: 200px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* 수정 페이지 특별 스타일 */
+.form-container {
+    border: 2px solid rgba(100, 255, 218, 0.4);
+}
+
+.page-header {
+    background: rgba(26, 26, 46, 0.5);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 3rem;
+} 

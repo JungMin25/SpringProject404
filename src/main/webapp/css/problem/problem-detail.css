@@ -1,0 +1,484 @@
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    min-height: 100vh;
+    color: #e0e0e0;
+    padding-top: 70px;
+}
+
+/* 헤더 */
+.header {
+    background: rgba(26, 26, 46, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(100, 255, 218, 0.1);
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    height: 70px;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #64ffda;
+    text-decoration: none;
+}
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: #b0b0b0;
+}
+
+.breadcrumb a {
+    color: #64ffda;
+    text-decoration: none;
+}
+
+/* 메인 컨테이너 */
+.main-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    height: calc(100vh - 70px);
+}
+
+/* 왼쪽 패널 - 문제 설명 */
+.problem-panel {
+    background: rgba(30, 30, 50, 0.95);
+    border-radius: 15px;
+    padding: 30px;
+    overflow-y: auto;
+    border: 1px solid rgba(100, 255, 218, 0.2);
+}
+
+.problem-header {
+    margin-bottom: 30px;
+}
+
+.problem-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #e0e0e0;
+}
+
+.problem-meta {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.difficulty-badge {
+    padding: 6px 15px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+}
+
+.difficulty-입문 {
+    background: #90EE90;
+}
+
+.difficulty-기초 {
+    background: #87CEEB;
+}
+
+.difficulty-중급 {
+    background: #FFA500;
+}
+
+.difficulty-고급 {
+    background: #FF6347;
+}
+
+.category-tag {
+    background: rgba(100, 255, 218, 0.2);
+    color: #64ffda;
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-size: 12px;
+}
+
+.stats-row {
+    display: flex;
+    gap: 20px;
+    color: #b0b0b0;
+    font-size: 14px;
+    flex-wrap: wrap;
+}
+
+.problem-content {
+    line-height: 1.8;
+}
+
+.problem-content h3 {
+    color: #64ffda;
+    margin: 25px 0 15px 0;
+    font-size: 18px;
+}
+
+.problem-content p {
+    margin-bottom: 15px;
+}
+
+.problem-content ul, .problem-content ol {
+    margin: 15px 0 15px 30px;
+}
+
+.problem-content li {
+    margin-bottom: 8px;
+}
+
+.code-example {
+    background: #2d3748;
+    color: #e2e8f0;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+    font-family: 'Consolas', 'Monaco', monospace;
+    overflow-x: auto;
+}
+
+/* 오른쪽 패널 - 코드 에디터 */
+.code-panel {
+    background: rgba(30, 30, 50, 0.95);
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid rgba(100, 255, 218, 0.2);
+}
+
+.code-header {
+    background: rgba(26, 26, 46, 0.8);
+    padding: 15px 20px;
+    border-bottom: 1px solid rgba(100, 255, 218, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.language-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #64ffda;
+    font-weight: 500;
+}
+
+.code-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.btn-primary {
+    background: #64ffda;
+    color: #1a1a2e;
+}
+
+.btn-success {
+    background: #64ffda;
+    color: #1a1a2e;
+}
+
+.btn-info {
+    background: #64ffda;
+    color: #1a1a2e;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    opacity: 0.9;
+}
+
+.code-editor {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+#monaco-editor {
+    flex: 1;
+    height: 100%;
+}
+
+/* 결과 패널 */
+.result-panel {
+    background: rgba(26, 26, 46, 0.8);
+    border-top: 1px solid rgba(100, 255, 218, 0.2);
+    padding: 20px;
+    min-height: 120px;
+    max-height: 180px;
+    overflow-y: auto;
+    display: block !important;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.result-panel.show {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.result-status {
+    font-weight: bold;
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 12px;
+    transition: all 0.3s ease;
+}
+
+.result-status.success {
+    background: rgba(76, 175, 80, 0.2);
+    color: #4caf50;
+}
+
+.result-status.error {
+    background: rgba(244, 67, 54, 0.2);
+    color: #f44336;
+}
+
+.result-status.warning {
+    background: rgba(255, 193, 7, 0.2);
+    color: #ffc107;
+}
+
+.result-status.running {
+    background: rgba(33, 150, 243, 0.2);
+    color: #2196f3;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.6; }
+    100% { opacity: 1; }
+}
+
+.result-ready {
+    background: rgba(100, 255, 218, 0.2);
+    color: #64ffda;
+}
+
+.result-content {
+    background: rgba(30, 30, 50, 0.8);
+    padding: 15px;
+    border-radius: 5px;
+    border-left: 4px solid #64ffda;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 13px;
+    white-space: pre-wrap;
+    color: #e0e0e0;
+    min-height: 60px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.result-content pre {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: none;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: 1.4;
+}
+
+.result-content .error {
+    color: #ff6b6b;
+}
+
+/* 탭스타일 */
+.tab-container {
+    display: flex;
+    background: rgba(26, 26, 46, 0.5);
+    border-bottom: 1px solid rgba(100, 255, 218, 0.2);
+    border-radius: 10px 10px 0 0;
+}
+
+.tab {
+    padding: 12px 20px;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    color: #b0b0b0;
+}
+
+.tab.active {
+    background: rgba(100, 255, 218, 0.1);
+    border-bottom-color: #64ffda;
+    color: #64ffda;
+}
+
+.tab:hover {
+    background: rgba(100, 255, 218, 0.05);
+    color: #e0e0e0;
+}
+
+.tab-content {
+    display: none;
+    padding: 20px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* 힌트 패널 */
+.hint-panel {
+    background: rgba(255, 243, 205, 0.1);
+    border: 1px solid rgba(255, 234, 167, 0.3);
+    border-radius: 5px;
+    padding: 15px;
+    margin: 20px 0;
+}
+
+.hint-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.hint-content {
+    display: none;
+    color: #e0e0e0;
+    margin-top: 10px;
+}
+
+.hint-content.show {
+    display: block;
+}
+
+/* 반응형 */
+@media (max-width: 1024px) {
+    .main-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+        height: auto;
+        min-height: calc(100vh - 70px);
+    }
+    
+    .problem-panel {
+        height: 45vh;
+        min-height: 400px;
+    }
+    
+    .code-panel {
+        height: 50vh;
+        min-height: 450px;
+    }
+    
+    .result-panel {
+        min-height: 100px;
+        max-height: 140px;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-container {
+        flex-direction: column;
+        height: auto;
+        padding: 15px;
+    }
+    
+    .main-container {
+        padding: 15px;
+        gap: 15px;
+    }
+    
+    .problem-panel {
+        height: 40vh;
+        min-height: 350px;
+    }
+    
+    .code-panel {
+        height: 55vh;
+        min-height: 400px;
+    }
+    
+    .result-panel {
+        min-height: 80px;
+        max-height: 120px;
+        padding: 15px;
+    }
+    
+    .problem-meta {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .code-actions {
+        flex-direction: column;
+        gap: 5px;
+    }
+}
+
+.editor-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #64ffda;
+    font-size: 16px;
+} 

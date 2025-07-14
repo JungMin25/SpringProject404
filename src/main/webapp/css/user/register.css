@@ -1,0 +1,431 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    min-height: 100vh;
+    color: #e0e0e0;
+}
+
+/* 인증 컨테이너 */
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+.auth-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 500px;
+    min-height: 80vh;
+    justify-content: center;
+}
+
+/* 로고 섹션 */
+.logo-section {
+    text-align: center;
+    margin-bottom: 30px;
+    margin-top: 20px;
+}
+
+.logo {
+    font-size: 36px;
+    font-weight: bold;
+    color: #64ffda;
+    margin-bottom: 10px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.logo:hover {
+    color: #4fd1a7;
+    transform: translateY(-2px);
+}
+
+.logo-subtitle {
+    color: #b0b0b0;
+    font-size: 16px;
+}
+
+/* 탭 컨테이너 */
+.tab-container {
+    display: flex;
+    background: rgba(26, 26, 46, 0.3);
+    border-radius: 10px;
+    margin-bottom: 30px;
+    overflow: hidden;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.tab {
+    padding: 12px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #b0b0b0;
+    font-weight: 500;
+    white-space: nowrap;
+    min-width: 80px;
+}
+
+.tab.active {
+    background: #64ffda;
+    color: #1a1a2e;
+}
+
+.tab:not(.active) {
+    background: rgba(26, 26, 46, 0.5);
+}
+
+/* 폼 컨테이너 */
+.form-container {
+    background: rgba(30, 30, 50, 0.95);
+    padding: 40px;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(100, 255, 218, 0.2);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #e0e0e0;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid rgba(100, 255, 218, 0.3);
+    border-radius: 10px;
+    background: rgba(26, 26, 46, 0.8);
+    color: #e0e0e0;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #64ffda;
+    box-shadow: 0 0 0 3px rgba(100, 255, 218, 0.1);
+}
+
+.form-group input::placeholder {
+    color: #b0b0b0;
+}
+
+.form-group.error input {
+    border-color: #ff6b6b;
+}
+
+.error-message {
+    color: #ff6b6b;
+    font-size: 14px;
+    margin-top: 5px;
+    display: none;
+}
+
+.success-message {
+    color: #64ffda;
+    font-size: 14px;
+    margin-top: 5px;
+    display: none;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 15px;
+    background: #64ffda;
+    color: #1a1a2e;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(100, 255, 218, 0.3);
+}
+
+.submit-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* 인증 링크 */
+.auth-links {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(100, 255, 218, 0.2);
+}
+
+.auth-links p {
+    color: #b0b0b0;
+    font-size: 14px;
+}
+
+.auth-links a {
+    color: #64ffda;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.auth-links a:hover {
+    color: #4fd1a7;
+}
+
+/* 반응형 - 큰 태블릿, 작은 노트북 */
+@media (max-width: 1200px) {
+    .logo-section {
+        margin-top: 70px;
+    }
+}
+
+/* 반응형 - 태블릿 */
+@media (max-width: 1024px) {
+    .logo-section {
+        margin-top: 50px;
+    }
+    
+    .logo {
+        font-size: 32px;
+    }
+    
+    .form-container {
+        max-width: 400px;
+        padding: 35px;
+    }
+}
+
+/* 반응형 - 작은 태블릿 */
+@media (max-width: 768px) {
+    .logo-section {
+        margin-top: 40px;
+    }
+    
+    .logo {
+        font-size: 30px;
+    }
+    
+    .logo-subtitle {
+        font-size: 14px;
+    }
+    
+    .form-container {
+        padding: 30px 20px;
+        max-width: 350px;
+    }
+    
+    .form-title {
+        font-size: 22px;
+    }
+}
+
+/* 반응형 - 큰 모바일 */
+@media (max-width: 600px) {
+    .logo-section {
+        margin-top: 30px;
+    }
+    
+    .logo {
+        font-size: 28px;
+    }
+    
+    .form-container {
+        max-width: 320px;
+        padding: 25px 15px;
+    }
+    
+    .form-title {
+        font-size: 20px;
+    }
+    
+    .email-verification-container {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+    .send-email-btn {
+        margin-left: 0;
+        width: 100%;
+    }
+}
+
+/* 반응형 - 모바일 */
+@media (max-width: 480px) {
+    .auth-container {
+        padding: 15px 10px;
+    }
+    
+    .logo-section {
+        margin-top: 20px;
+    }
+
+    .logo {
+        font-size: 26px;
+    }
+    
+    .logo-subtitle {
+        font-size: 13px;
+    }
+    
+    .form-container {
+        padding: 25px 15px;
+        max-width: 290px;
+    }
+    
+    .form-title {
+        font-size: 18px;
+        margin-bottom: 25px;
+    }
+    
+    .form-group input {
+        padding: 10px 12px;
+        font-size: 14px;
+    }
+}
+
+/* 반응형 - 매우 작은 화면 */
+@media (max-width: 360px) {
+    .auth-container {
+        padding: 10px 5px;
+    }
+    
+    .logo-section {
+        margin-top: 20px;
+    }
+    
+    .logo {
+        font-size: 24px;
+    }
+    
+    .logo-subtitle {
+        font-size: 12px;
+    }
+    
+    .form-container {
+        padding: 20px 12px;
+        max-width: 270px;
+    }
+    
+    .form-title {
+        font-size: 16px;
+    }
+}
+
+/* 이메일 인증 관련 스타일 */
+.email-verification-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.email-verification-container input {
+    flex: 1;
+    min-width: 0;
+}
+
+.send-email-btn {
+    padding: 12px 16px;
+    background: #64ffda;
+    color: #1a1a2e;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: 8px;
+    box-shadow: 0 2px 8px rgba(100, 255, 218, 0.08);
+}
+
+.send-email-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(100, 255, 218, 0.3);
+    background: #4fd1a7;
+}
+
+.send-email-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* 인증번호 입력란과 인증확인 버튼 가로 배치 */
+.verification-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.verification-container input {
+    flex: 1;
+    min-width: 0;
+}
+
+/* 인증확인 버튼 스타일 (발송 버튼과 통일) */
+.verify-btn {
+    padding: 12px 16px;
+    background: #64ffda;
+    color: #1a1a2e;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: 8px;
+    box-shadow: 0 2px 8px rgba(100, 255, 218, 0.08);
+}
+
+.verify-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(100, 255, 218, 0.3);
+    background: #4fd1a7;
+}
+
+.verify-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+    .verification-container {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+    .verify-btn {
+        margin-left: 0;
+        width: 100%;
+    }
+} 

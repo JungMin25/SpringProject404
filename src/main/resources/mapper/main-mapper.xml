@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mainRepository">   
+   
+   
+   <!-- 전체수 카운트 -->
+   <select id="countProblems" resultType="int">
+       SELECT COUNT(*) FROM problems
+   </select>
+   
+   <select id="countUsers" resultType="int">
+       SELECT COUNT(*) FROM USERS
+   </select>
+   
+   
+   <!-- 1. 중복 제거 정답 제출 수 -->
+   <select id="countSucProblem" resultType="int">
+       SELECT COUNT(*) 
+       FROM (
+           SELECT user_id, problem_id
+           FROM PROBLEM_SUBMISSIONS
+           WHERE is_correct = TRUE
+           GROUP BY user_id, problem_id
+       ) AS distinct_correct
+   </select>
+
+
+
+   
+   
+   
+   
+   <!-- 카테고리별 문제 수 -->
+   <select id="countProblemsByCategory"
+           parameterType="int"
+           resultType="int">
+       SELECT COUNT(*)  
+       FROM PROBLEMS
+       WHERE category_id = #{categoryId}
+   </select>
+   
+</mapper>

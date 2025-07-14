@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="postRepository">
+
+
+
+	<select id="getAllPostInfo" resultType="post">
+    SELECT 
+        p.*,
+        (SELECT COUNT(*) 
+         FROM POST_COMMENTS pc 
+         WHERE pc.post_id = p.post_id) AS post_comment_count
+    FROM POSTS p
+    ORDER BY p.created_at DESC, p.post_id DESC
+    LIMIT #{offset}, #{pageSize}
+</select>
+
+	<select id="getCategoryPostInfo" resultType="post">
+	SELECT 
+    p.*,
+    (SELECT COUNT(*) 
+     FROM POST_COMMENTS pc 
+     WHERE pc.post_id = p.post_id) AS post_comment_count
+FROM POSTS p
+WHERE (#{category_id} IS NULL OR p.category_id = #{category_id})
+  AND (#{searchKeyword} IS NULL 
+       OR p.title LIKE CONCAT('%', #{searchKeyword}, '%') 
+       OR p.content LIKE CONCAT('%', #{searchKeyword}, '%'))
+ORDER BY p.created_at DESC, p.post_id DESC
+LIMIT #{offset}, #{pageSize};
+	</select>
+
+
+	
+	<select id="getAllPostCategory" resultType="postCategory">
+		SELECT * FROM POST_CATEGORY WHERE category_id = #{category_id};
+	</select>
+	
+	<select id="getAllPostUser" resultType="user">
+		SELECT * FROM USERS WHERE user_id = #{user_id};
+	</select>
+
+<select id="countPost" parameterType="map" resultType="int">
+	 SELECT COUNT(*) FROM POSTS
+	 <where>
+	        <if test="category_id != null">
+	            AND category_id = #{category_id}
+	        </if>
+	        <if test="searchKeyword != null and searchKeyword != ''">
+	            AND title LIKE CONCAT('%', #{searchKeyword}, '%')
+	        </if>
+	  </where>
+</select>
+
+
+<select id="selectOnePost" resultType="post">
+	select * from posts where post_id = #{post_id};
+</select>
+
+<select id="selectOnePostUser" resultType="user">
+	select * from users where user_id = #{user_id};
+</select>
+
+<select id="selectOnePostCat" resultType="postCategory">
+	select * from POST_CATEGORY where category_id = #{category_id};
+</select>
+
+<select id="getPostCommentList" resultType="postComment">
+	select * from POST_COMMENTS where post_id = #{post_id};
+</select>
+
+<select id="getCommentUser" resultType="user">
+	select * from users where user_id = #{user_id};
+</select>
+	    
+<update id="updatePost">
+		UPDATE POSTS
+	SET 
+    	title = #{title},
+    	content = #{content},
+    	category_id = #{category_id}
+	WHERE post_id = #{post_id};
+</update>
+	
+	<delete id="deletePost">
+		DELETE FROM POSTS WHERE post_id = #{post_id};
+	</delete>
+	
+	<update id="upViewCount">
+		UPDATE POSTS
+		SET view_count = view_count + 1
+		WHERE post_id = ${post_id};
+	</update>
+	
+	<insert id="insertComment">
+		INSERT INTO POST_COMMENTS (post_id, user_id, content) VALUES
+								  (#{post_id}, #{user_id}, #{content});
+	</insert>
+	
+	<delete id="deleteComment">
+		DELETE FROM POST_COMMENTS WHERE comment_id = #{comment_id};
+	</delete>
+	
+	<insert id="insertBoard">
+		INSERT INTO POSTS (user_id, category_id, title, content) VALUES
+								  (#{user_id}, #{category_id}, #{title}, #{content});
+	</insert>
+	
+</mapper>

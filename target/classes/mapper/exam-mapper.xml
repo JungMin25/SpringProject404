@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="examRepository">
+
+	<select id="getExamSubCount" resultType="examSub">
+		SELECT COUNT(*) AS total_submissions,
+		SUM(CASE WHEN is_passed = TRUE THEN 1 ELSE 0 END) AS passed_count, 
+		ROUND( 100.0 * SUM(CASE WHEN is_passed = TRUE THEN 1 ELSE 0 END) / COUNT(*), 2) 
+		AS pass_rate_percent
+		FROM EXAM_SUBMISSIONS;
+	</select>
+	
+	<select id="getExamTitle" resultType="exam">
+		SELECT * FROM EXAMS;
+	</select>
+	
+	<select id="getExamProblemIds" resultType="examProblem">
+		SELECT * FROM EXAM_PROBLEMS WHERE exam_id = #{exam_id};
+	</select>
+	
+	<select id="getExamProblemInfo" resultType="examProblem">
+		SELECT * FROM EXAM_PROBLEMS WHERE exam_id = #{exam_id} AND exam_problem_id = #{exam_problem_id};
+	</select>
+	
+	<select id="getExamProblem" resultType="problem">
+		SELECT * FROM PROBLEMS WHERE problem_id = #{problem_id};
+	</select>
+	
+	<insert id="insertExamAnswer">
+		 INSERT INTO EXAM_ANSWER_DETAILS (
+            exam_problem_id,
+            problem_id,
+            submitted_answer,
+            is_correct,
+            exam_submission_id
+        )
+        VALUES (
+            #{exam_problem_id},
+            #{problem_id},
+            #{submitted_answer},
+            #{is_correct},
+            #{exam_submission_id}
+        )
+	</insert>
+	
+	<insert id="insertExamSubmission" parameterType="examSub" useGeneratedKeys="true" keyProperty="exam_submission_id">
+    INSERT INTO EXAM_SUBMISSIONS (
+        user_id, exam_id, correct_count, wrong_count, is_passed
+    ) VALUES (
+        #{user_id}, #{exam_id}, 0, 0, false
+    )
+</insert>
+
+	<select id="getExamAnswerDetails" resultType="examAnswer">
+		SELECT * FROM EXAM_ANSWER_DETAILS WHERE exam_submission_id = #{exam_submission_id};
+	</select>
+	
+	<select id="getExamAnswerCorrect" resultType="examSub">
+		SELECT 
+    	exam_submission_id,
+    	SUM(CASE WHEN is_correct = TRUE THEN 1 ELSE 0 END) AS correct_count,
+    	SUM(CASE WHEN is_correct = FALSE THEN 1 ELSE 0 END) AS wrong_count,
+    	ROUND(
+        	100.0 * SUM(CASE WHEN is_correct = TRUE THEN 1 ELSE 0 END) / COUNT(*), 
+        	2
+    	) AS correct_percent,
+    	CASE 
+        	WHEN ROUND(100.0 * SUM(CASE WHEN is_correct = TRUE THEN 1 ELSE 0 END) / COUNT(*), 2) >= 70 
+        	THEN TRUE
+        	ELSE FALSE
+    	END AS is_passed
+	FROM EXAM_ANSWER_DETAILS
+	WHERE exam_submission_id = #{exam_submission_id}
+	GROUP BY exam_submission_id;
+	</select>
+	
+	<select id="getProblemDif" resultType="difficulty">
+		SELECT * FROM DIFFICULTY_LEVELS WHERE difficulty_id = #{difficulty_id};
+	</select>
+	
+	<select id="getProblemCat" resultType="category">
+		SELECT * FROM CATEGORIES WHERE category_id = #{category_id};
+	</select>
+	
+	<select id="getproblemInfoList" resultType="problem">
+		SELECT * FROM PROBLEMS;
+	</select>
+	
+	<insert id="insertExam" parameterType="exam" useGeneratedKeys="true" keyProperty="exam_id">
+    INSERT INTO EXAMS (
+        exam_title, description
+    ) VALUES (
+        #{exam_title}, #{description}
+    )
+</insert>
+	
+	<insert id="insertExamProblem">
+		INSERT INTO EXAM_PROBLEMS (
+        exam_id, exam_problem_id, problem_id
+    ) VALUES (
+        #{exam_id}, #{exam_problem_id}, #{problem_id}
+    )
+	</insert>
+	
+	<delete id="deleteExam">
+		DELETE FROM EXAMS WHERE exam_id = #{exam_id};
+	</delete>
+	
+	<delete id="deleteExamProblem">
+		DELETE FROM EXAM_PROBLEMS WHERE exam_id = #{exam_id};
+	</delete>
+	
+	
+</mapper>

@@ -1,0 +1,15 @@
+﻿# Google OAuth2 설정
+spring.security.oauth2.client.registration.google.client-id=YOUR_GOOGLE_CLIENT_ID
+spring.security.oauth2.client.registration.google.client-secret=YOUR_GOOGLE_CLIENT_SECRET
+spring.security.oauth2.client.registration.google.scope=openid,profile,email
+spring.security.oauth2.client.registration.google.redirect-uri={baseUrl}/login/oauth2/code/{registrationId}
+
+# Google OAuth2 Provider 설정
+spring.security.oauth2.client.provider.google.authorization-uri=https://accounts.google.com/o/oauth2/auth
+spring.security.oauth2.client.provider.google.token-uri=https://oauth2.googleapis.com/token
+spring.security.oauth2.client.provider.google.user-info-uri=https://openidconnect.googleapis.com/v1/userinfo
+spring.security.oauth2.client.provider.google.user-name-attribute=sub
+
+# 로깅 설정
+logging.level.org.springframework.security=DEBUG
+logging.level.org.springframework.security.oauth2=DEBUG

@@ -1,0 +1,777 @@
+/* 기본 스타일 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    color: #e0e0e0;
+    min-height: 100vh;
+    padding-top: 120px; /* 헤더 + 진행바 높이 */
+}
+
+/* 헤더 */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: rgba(26, 26, 46, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(100, 255, 218, 0.2);
+    height: 70px;
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    height: 100%;
+}
+
+.logo {
+    font-size: 2rem;
+    font-weight: 900;
+    background: linear-gradient(45deg, #64ffda, #4fd1c7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-decoration: none;
+    letter-spacing: -2px;
+}
+
+.exam-info {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.exam-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #e0e0e0;
+}
+
+.timer-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(100, 255, 218, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: 1px solid rgba(100, 255, 218, 0.3);
+}
+
+.timer-label {
+    color: #b0b0b0;
+    font-size: 0.9rem;
+}
+
+.timer {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #64ffda;
+    font-family: 'Courier New', monospace;
+}
+
+.timer.warning {
+    color: #e74c3c;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0.5; }
+}
+
+.exam-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+/* 진행 상황 바 */
+.progress-container {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    background: rgba(26, 26, 46, 0.9);
+    padding: 1rem 2rem;
+    border-bottom: 1px solid rgba(100, 255, 218, 0.2);
+}
+
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    color: #b0b0b0;
+}
+
+.progress-percentage {
+    color: #64ffda;
+    font-weight: 600;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #64ffda, #4fd1c7);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+/* 메인 컨테이너 */
+.main-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    min-height: calc(100vh - 120px);
+    overflow: hidden;
+}
+
+/* 문제 패널 */
+.problem-panel {
+    background: rgba(26, 26, 46, 0.8);
+    border-radius: 12px;
+    padding: 2rem;
+    border: 1px solid rgba(100, 255, 218, 0.2);
+    height: fit-content;
+    max-height: calc(100vh - 160px);
+    overflow-y: auto;
+}
+
+.question-nav {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(100, 255, 218, 0.2);
+}
+
+.question-status {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.9rem;
+}
+
+.status-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.status-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #34495e;
+}
+
+.status-dot.answered {
+    background: #27ae60;
+}
+
+.status-dot.current {
+    background: #64ffda;
+}
+
+.status-dot.unanswered {
+    background: #e74c3c;
+}
+
+.status-dot.submitted {
+    background: #2ecc71;
+}
+
+.status-dot.skipped {
+    background: #f39c12;
+}
+
+.problem-header {
+    margin-bottom: 2rem;
+}
+
+.problem-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #64ffda;
+    margin-bottom: 1rem;
+}
+
+.problem-meta {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.difficulty-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.difficulty-입문 { background: linear-gradient(45deg, #27ae60, #2ecc71); color: white; }
+.difficulty-기초 { background: linear-gradient(45deg, #3498db, #2980b9); color: white; }
+.difficulty-중급 { background: linear-gradient(45deg, #f39c12, #e67e22); color: white; }
+.difficulty-고급 { background: linear-gradient(45deg, #e74c3c, #c0392b); color: white; }
+
+.category-tag {
+    background: rgba(100, 255, 218, 0.2);
+    color: #64ffda;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    border: 1px solid rgba(100, 255, 218, 0.3);
+}
+
+.points {
+    color: #f39c12;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.points::before {
+    content: "⭐";
+}
+
+.problem-content {
+    line-height: 1.6;
+}
+
+.content-section {
+    margin-bottom: 25px;
+}
+
+.content-section h3 {
+    color: #64ffda;
+    margin-bottom: 15px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.content-section p {
+    line-height: 1.7;
+    margin-bottom: 10px;
+    color: #e0e0e0;
+}
+
+.io-example {
+    background: rgba(52, 73, 94, 0.3);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+    border-left: 4px solid #64ffda;
+}
+
+.example-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin: 1rem 0;
+}
+
+.example-item h4 {
+    color: #64ffda;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+/* 코드 블록 스타일 - JSP에서 이동 */
+.code-block {
+    background: #2d3748;
+    color: #e2e8f0;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 15px 0;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    overflow-x: auto;
+    border-left: 4px solid #64ffda;
+}
+
+.code-block pre {
+    margin: 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.code-block code {
+    background: none;
+    color: inherit;
+    padding: 0;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* 편집 가능한 코드 블록 스타일 */
+.code-block code[contenteditable="true"] {
+    outline: none;
+    min-height: 200px;
+    display: block;
+    white-space: pre;
+    word-wrap: normal;
+}
+
+.code-block code[contenteditable="true"]:focus {
+    background: rgba(100, 255, 218, 0.05);
+}
+
+/* 코드 패널 */
+.code-panel {
+    background: rgba(26, 26, 46, 0.8);
+    border-radius: 12px;
+    border: 1px solid rgba(100, 255, 218, 0.2);
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 160px);
+    min-height: 600px;
+    overflow: hidden;
+}
+
+.code-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid rgba(100, 255, 218, 0.2);
+    background: rgba(26, 26, 46, 0.5);
+}
+
+.language-info {
+    color: #64ffda;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.code-actions {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.code-editor {
+    flex: 1;
+    position: relative;
+    min-height: 400px;
+    overflow: hidden;
+}
+
+.code-editor textarea {
+    width: 100%;
+    height: 100%;
+    background: #1e1e1e;
+    color: #d4d4d4;
+    border: none;
+    padding: 1rem;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    resize: none;
+    outline: none;
+    tab-size: 4;
+}
+
+.code-editor textarea:focus {
+    background: #252526;
+}
+
+/* Monaco Editor 스타일 - JSP에서 이동 */
+#monaco-editor {
+    height: 100%;
+    min-height: 400px;
+}
+
+.editor-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+    color: #64ffda;
+    font-size: 16px;
+}
+
+/* 결과 패널 스타일 - JSP에서 이동하여 수정 */
+.result-panel {
+    opacity: 1;
+    visibility: visible;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    min-height: 120px;
+    max-height: 200px;
+    border-top: 1px solid rgba(100, 255, 218, 0.2);
+    padding: 1rem 1.5rem;
+}
+
+.result-panel.show {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.result-header h4 {
+    color: #64ffda;
+    margin: 0;
+}
+
+.result-status {
+    font-weight: bold;
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 12px;
+    background: rgba(100, 255, 218, 0.2);
+    color: #64ffda;
+}
+
+.result-status.success {
+    background: rgba(39, 174, 96, 0.2);
+    color: #27ae60;
+}
+
+.result-status.error {
+    background: rgba(231, 76, 60, 0.2);
+    color: #e74c3c;
+}
+
+.result-status.warning {
+    background: rgba(243, 156, 18, 0.2);
+    color: #f39c12;
+}
+
+.result-status.running {
+    background: rgba(52, 152, 219, 0.2);
+    color: #3498db;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.result-status .status-ready { color: #7f8c8d; }
+.result-status .status-running { color: #f39c12; }
+.result-status .status-success { color: #27ae60; }
+.result-status .status-error { color: #e74c3c; }
+
+.result-content {
+    background: rgba(30, 30, 50, 0.8);
+    padding: 15px;
+    border-radius: 5px;
+    border-left: 4px solid #64ffda;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 13px;
+    white-space: pre-wrap;
+    color: #e0e0e0;
+    overflow-y: auto;
+    max-height: 120px;
+    line-height: 1.4;
+}
+
+.result-content pre {
+    margin: 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    background: none;
+    padding: 0;
+    border: none;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+}
+
+.result-content .error {
+    color: #e74c3c;
+}
+
+.result-output {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(100, 255, 218, 0.2);
+    font-family: 'Consolas', 'Monaco', monospace;
+    color: #d4d4d4;
+}
+
+
+
+/* 버튼 스타일 */
+.btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+}
+
+.btn-primary {
+    background: rgba(52, 152, 219, 0.8);
+    color: white;
+}
+
+.btn-success {
+    background: rgba(39, 174, 96, 0.8);
+    color: white;
+}
+
+.btn-warning {
+    background: rgba(243, 156, 18, 0.8);
+    color: white;
+}
+
+.btn-danger {
+    background: rgba(231, 76, 60, 0.8);
+    color: white;
+}
+
+.btn-secondary {
+    background: rgba(127, 140, 141, 0.8);
+    color: white;
+}
+
+.btn-info {
+    background: rgba(100, 255, 218, 0.8);
+    color: #1a1a2e;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* 반응형 디자인 개선 - JSP에서 이동 */
+@media (max-width: 1024px) {
+    .main-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+        height: auto;
+        min-height: calc(100vh - 140px);
+        gap: 15px;
+    }
+    
+    .problem-panel {
+        height: auto;
+        min-height: 300px;
+        max-height: 40vh;
+        overflow-y: auto;
+    }
+    
+    .code-panel {
+        height: auto;
+        min-height: 500px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .code-editor {
+        flex: 1;
+        min-height: 350px;
+    }
+
+    #monaco-editor {
+        min-height: 350px;
+    }
+    
+    .result-panel {
+        min-height: 100px;
+        max-height: 150px;
+        flex-shrink: 0;
+    }
+
+    .result-content {
+        max-height: 100px;
+        font-size: 12px;
+        padding: 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-top: 60px;
+    }
+
+    .nav-container {
+        padding: 0 1rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+        height: auto;
+        min-height: 60px;
+    }
+
+    .header {
+        height: auto;
+        min-height: 60px;
+    }
+
+    .progress-container {
+        padding: 0.75rem 1rem;
+    }
+
+    .exam-info {
+        order: 3;
+        flex-basis: 100%;
+        justify-content: center;
+    }
+
+    .exam-actions {
+        gap: 0.5rem;
+    }
+
+    .question-nav {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .question-status {
+        justify-content: center;
+    }
+
+    .main-container {
+        padding: 10px;
+        gap: 10px;
+        min-height: calc(100vh - 120px);
+    }
+    
+    .problem-panel {
+        min-height: 250px;
+        max-height: 35vh;
+        padding: 20px;
+    }
+    
+    .code-panel {
+        min-height: 450px;
+    }
+
+    .code-editor {
+        min-height: 300px;
+    }
+
+    #monaco-editor {
+        min-height: 300px;
+    }
+    
+    .result-panel {
+        min-height: 80px;
+        max-height: 120px;
+    }
+
+    .result-content {
+        max-height: 80px;
+        font-size: 11px;
+        padding: 10px;
+    }
+
+    .code-actions {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .code-actions .btn {
+        width: 100%;
+        padding: 10px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-container {
+        padding: 8px;
+        min-height: calc(100vh - 100px);
+    }
+
+    .problem-panel {
+        min-height: 200px;
+        max-height: 30vh;
+        padding: 15px;
+    }
+
+    .code-panel {
+        min-height: 400px;
+    }
+
+    .code-editor {
+        min-height: 250px;
+    }
+
+    #monaco-editor {
+        min-height: 250px;
+    }
+
+    .result-panel {
+        min-height: 70px;
+        max-height: 100px;
+    }
+
+    .result-content {
+        max-height: 70px;
+        font-size: 10px;
+        padding: 8px;
+    }
+
+    .content-section h3 {
+        font-size: 16px;
+    }
+
+    .problem-title {
+        font-size: 20px;
+    }
+}
+
+/* 스크롤바 스타일 */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(26, 26, 46, 0.5);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(100, 255, 218, 0.5);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(100, 255, 218, 0.7);
+} 

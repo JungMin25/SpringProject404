@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="problemRepository">
+
+	<!-- 결과 매핑 -->
+    <resultMap id="ProblemDTOMapper"
+               type="com.spring.project.dto.problem.ProblemDTO">
+        <id     property="problem_id"     column="problem_id"/>
+        <result property="title"          column="title"/>
+        <result property="description"    column="description"/>
+        <result property="hint"           column="hint"/>
+        <result property="explanation"    column="explanation"/>
+        <result property="correct_answer" column="correct_answer"/>
+        <result property="correct_answer_code" column="correct_answer_code"/>
+        <result property="difficulty_id"  column="difficulty_id"/>
+        <result property="category_id"    column="category_id"/>
+        <!-- created_at 은 DB default 로 자동 입력된다고 가정 -->
+        <result property="created_at"     column="created_at"/>
+        <result property="solve_count"    column="solve_count"/>
+        <result property="correct_count"  column="correct_count"/>
+    </resultMap>
+
+    
+
+      <!--  리스트/조건 조회 -->
+    <select id="findProblems" parameterType="map" resultMap="ProblemDTOMapper">
+        SELECT * FROM PROBLEMS
+        <where>
+            <if test="category_id != null">
+                AND category_id = #{category_id}
+            </if>
+            <if test="difficulty_id != null">
+                AND difficulty_id = #{difficulty_id}
+            </if>
+            <if test="searchKeyword != null and searchKeyword != ''">
+                AND title LIKE CONCAT('%', #{searchKeyword}, '%')
+            </if>
+        </where>
+        ORDER BY created_at DESC
+        <!-- 밑에 if문 추가-->
+        <if test="size != null and offset != null">
+        LIMIT #{size} OFFSET #{offset}
+    	</if>
+    </select>   
+    
+    <select id="getCorrectRate" resultType="problemSub">
+    	SELECT
+    COUNT(*) AS total_submissions,
+    SUM(CASE WHEN is_correct = TRUE THEN 1 ELSE 0 END) AS correct_submissions,
+    ROUND(
+        IF(COUNT(*) = 0, 0, 
+           SUM(CASE WHEN is_correct = TRUE THEN 1 ELSE 0 END) / COUNT(*) * 100
+        ), 2
+    ) AS correct_rate
+FROM PROBLEM_SUBMISSIONS
+WHERE problem_id = #{problem_id};
+    </select>
+    
+
+	<select id="countProblems" parameterType="map" resultType="int">
+	    SELECT COUNT(*) FROM problems
+	    <where>
+	        <if test="category_id != null">
+	            AND category_id = #{category_id}
+	        </if>
+	        <if test="difficulty_id != null">
+	            AND difficulty_id = #{difficulty_id}
+	        </if>
+	        <if test="searchKeyword != null and searchKeyword != ''">
+	            AND title LIKE CONCAT('%', #{searchKeyword}, '%')
+	        </if>
+	    </where>
+	</select>
+
+	<select id="getProblemLevel" resultType="difficulty">
+		select * from DIFFICULTY_LEVELS where difficulty_id = #{difficulty_id};
+	</select>
+	
+	<select id="getCategoryLevel" resultType="category">
+		select * from CATEGORIES where category_id = #{category_id};
+	</select>
+	
+	<select id="getProblemList" resultMap="ProblemDTOMapper" parameterType="map">
+	    SELECT * FROM problems
+	    ORDER BY problem_id DESC
+	    LIMIT #{size} OFFSET #{offset}
+	</select>
+
+	<insert id="insertProblem">
+		<![CDATA[INSERT INTO PROBLEMS (title, description, hint, explanation, correct_answer, correct_answer_code, difficulty_id, category_id) VALUES
+									  (#{title}, #{description}, #{hint}, #{explanation}, #{correct_answer}, #{correct_answer_code}, #{difficulty_id}, #{category_id})]]>
+	</insert>
+	
+	<select id="getOneProblemInfo" resultType="problem">
+		<![CDATA[SELECT * FROM PROBLEMS WHERE problem_id = #{problem_id}]]>
+	</select>
+	<select id="getOneProblemDif" resultType="difficulty">
+		<![CDATA[SELECT * FROM DIFFICULTY_LEVELS WHERE difficulty_id = #{difficulty_id}]]>
+	</select>
+	<select id="getOneProblemCat" resultType="category">
+		<![CDATA[SELECT * FROM CATEGORIES WHERE category_id = #{category_id}]]>
+	</select>
+	
+	<insert id="insertProblemSub" useGeneratedKeys="true" keyProperty="submission_id" parameterType="problemSub">
+		<![CDATA[INSERT INTO PROBLEM_SUBMISSIONS (user_id, problem_id, submitted_code, is_correct, attempt_count ) VALUES
+													(#{user_id}, #{problem_id}, #{submitted_code}, #{is_correct}, #{attempt_count})]]>
+	</insert>
+	
+	<select id="getProblemSubInfo" resultType="problemSub">
+		<![CDATA[SELECT * FROM PROBLEM_SUBMISSIONS WHERE submission_id = #{submission_id}]]>
+	</select>
+	
+	<select id="userProblemSubChk" resultType="problemSub">
+		<![CDATA[SELECT * FROM PROBLEM_SUBMISSIONS WHERE problem_id = #{problem_id} and user_id = #{user_id}]]>
+	</select>
+	
+	<update id="userSetLevel">
+			<![CDATA[UPDATE USERS SET experience_points = experience_points + #{attempt_count} WHERE user_id = #{user_id}]]>
+	</update>
+	
+	<select id="selectOneUser" resultType="user">
+		<![CDATA[SELECT * FROM USERS WHERE user_id = #{user_id}]]>
+	</select>
+	
+	<select id="selectOneUserGrade" resultType="userGrade">
+		<![CDATA[SELECT * FROM USER_GRADES WHERE grade_id = #{grade_id}]]>
+	</select>
+	
+	<update id="updateProblem">
+		<![CDATA[UPDATE PROBLEMS
+	SET 
+    title = #{title},
+    category_id = #{category_id},
+    difficulty_id = #{difficulty_id},
+    description = #{description},
+    correct_answer = #{correct_answer},
+    correct_answer_code = #{correct_answer_code},
+    explanation = #{explanation},
+    hint = #{hint} 
+    WHERE problem_id = #{problem_id}]]>
+	</update>
+	
+	<select id="getSortedProblemList" parameterType="map" resultMap="ProblemDTOMapper">
+	    SELECT * FROM problems
+	    <where>
+	    	
+	        <if test="category_id != null">
+	            AND category_id = #{category_id}
+	        </if>
+	        <if test="difficulty_id != null">
+	            AND difficulty_id = #{difficulty_id}
+	        </if>
+	        <if test="searchKeyword != null and searchKeyword != ''">
+	            AND title LIKE CONCAT('%', #{searchKeyword}, '%')
+	        </if>
+	    </where>
+			<choose>
+			    <when test="sort != null and sort == 'all'">
+			        ORDER BY problem_id DESC
+			    </when>
+			    <when test="sort != null and sort == 'created'">
+			        ORDER BY created_at DESC
+			    </when>
+			    <when test="sort != null and sort == 'title'">
+			        ORDER BY title ASC
+			    </when>
+			    <when test="sort != null and sort == 'difficulty'">
+			        ORDER BY difficulty_id ASC
+			    </when>
+			    <otherwise>
+			        ORDER BY problem_id DESC
+			    </otherwise>
+			</choose>
+			<if test="size != null and offset != null">
+		        LIMIT #{size} OFFSET #{offset}
+		    </if>
+	</select>
+	
+	<select id="getProblemPlayCount" resultType="int">
+		SELECT COUNT(*) FROM PROBLEM_SUBMISSIONS WHERE problem_id = #{problem_id};
+	</select>
+	
+	
+</mapper>
