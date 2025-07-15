@@ -64,7 +64,8 @@ mvn tomcat7:run
 
 # 개발환경
 * `Java11`
-* **DataBase**: Oracle
+* **DataBase**: MySQL
+* **ORM** : MyBatis
 
 # 주요기능 
 
